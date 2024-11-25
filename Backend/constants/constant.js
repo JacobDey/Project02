@@ -32,6 +32,7 @@ export const HTTP_RESPONSE_CODE = {
     menuNotFound: "No menu items found",
     invalidCredentials: "Invalid user email or password",
     invalidEmail: "Enter a valid email address",
+    invalidRequest: "Request body could not be read properly",
   };
 
   export const ORDER_STATUS = {
