@@ -25,7 +25,6 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(errorMiddleware);
 app.use(
     session({
       secret: process.env.TOKEN_SECRET,
@@ -38,6 +37,7 @@ app.use(
 app.use("/driver", driverRoutes);
 app.use("/restaurant", restaurantRoutes);
 app.use("/tracking", trackingRoutes);
+app.use(errorMiddleware);
 
 app.listen(port, () => {
   console.log("Server is running on port", port);

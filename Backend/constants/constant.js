@@ -21,6 +21,7 @@ export const HTTP_RESPONSE_CODE = {
     serverError: "Something went wrong, try again later",
     createdUser: "User created successfully",
     existedUser: "Username already taken",
+    existedEmail: "Email already taken",
     userReturned: "User returned successfully",
     ordersReturned: "Orders returned successfully",
     createdOrder: "Order created successfully",

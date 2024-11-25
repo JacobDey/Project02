@@ -8,7 +8,7 @@ import {
   HTTP_RESPONSE_CODE,
   APP_ERROR_MESSAGE,
 } from "../constants/constant.js";
-import HttpException from "../exceptions/exceptions.js";
+import { HttpException } from "../exceptions/exceptions.js";
 const { validationResult } = validator;
 
 export const authenticate = (req, res, next) => {
@@ -36,11 +36,8 @@ export const login = async (req, res, next) => {
       );
     }
 
-    const { username, password } = req.body;
-    const isEmail = validator.isEmail(username);
-    const user = await Customer.findOne(
-      isEmail ? { email: username } : { username: username }
-    ).exec();
+    const { email, password } = req.body;
+    const user = await Customer.findOne({ email }).exec();
     if (!user) {
       throw new HttpException(
         HTTP_RESPONSE_CODE.BAD_REQUEST,
@@ -175,7 +172,7 @@ export const getOrderStatus = async (req, res, next) => {
         APP_ERROR_MESSAGE.orderNotFound
       );
     }
-    
+
     return res
       .status(HTTP_RESPONSE_CODE.SUCCESS)
       .send(

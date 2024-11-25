@@ -1,6 +1,11 @@
 import validator from "express-validator";
-import { Customer } from "../models/customer";
-const { check, oneOf } = validator;
+import { Customer } from "../models/customer.js";
+import { HttpException } from "../exceptions/exceptions.js";
+import {
+  APP_ERROR_MESSAGE,
+  HTTP_RESPONSE_CODE,
+} from "../constants/constant.js";
+const { check } = validator;
 
 export const customerRegister = [
   check("username")
@@ -9,8 +14,12 @@ export const customerRegister = [
     .isLength({ min: 5 })
     .withMessage("Username must be a minimum 5 characters.")
     .custom(async (value) => {
-      const existingUser = Customer.findOne({ username: value });
-      if (existingUser) throw new Error("Username already in use.");
+      const existingUser = await Customer.findOne({ username: value }).exec();
+      if (existingUser)
+        throw new HttpException(
+          HTTP_RESPONSE_CODE.CONFLICT,
+          APP_ERROR_MESSAGE.existedUser
+        );
     }),
 
   check("email")
@@ -19,8 +28,12 @@ export const customerRegister = [
     .withMessage("Please enter a valid email")
     .normalizeEmail()
     .custom(async (value) => {
-      const existingUser = await Customer.findOne({ email: value });
-      if (existingUser) throw new Error("Email already in use");
+      const existingUser = await Customer.findOne({ email: value }).exec();
+      if (existingUser)
+        throw new HttpException(
+          HTTP_RESPONSE_CODE.CONFLICT,
+          APP_ERROR_MESSAGE.existedEmail
+        );
     }),
 
   check("password")
@@ -40,13 +53,6 @@ export const customerRegister = [
 ];
 
 export const customerLogin = [
-  oneOf([
-    check("username")
-      .isLength({ min: 5 })
-      .withMessage("Username minimum length 5."),
-
-    check("username").isEmail().withMessage("Invalid email address."),
-  ]),
-
+  check("email").isEmail().withMessage("Invalid email address."),
   check("password").exists().withMessage("Incorrect password"),
 ];
