@@ -21,6 +21,7 @@ const MenuList = ({ menuItems }) => {
                     padding: "64px"
                 }}
             >
+                <p> Hey big man what's happening </p>
                 <List>
                     {menuItems && menuItems.map((item) => {
                         return (

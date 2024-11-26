@@ -15,7 +15,7 @@ export const authenticate = (req, res, next) => {
   try {
     if (!req.session.user) {
       return res.status(HTTP_RESPONSE_CODE.UNAUTHORIZED).send({
-        error: "user not allowed to perform this action, login to continue",
+        error: "You must be logged in to perform this action, login to continue",
         redirectUrl: "/login",
       });
     }

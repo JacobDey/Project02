@@ -8,13 +8,13 @@ import restaurantRoutes from "./routes/restaurant.js";
 import trackingRoutes from "./routes/tracking.js";
 import errorMiddleware from "./middlewares/error-middleware.js";
 
-dotenv.config();
+//dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
 mongoose
   .connect(
-    process.env.NODE_ENV === "DEV" ? process.env.DEVDB : process.env.MONGDB_URI
+    "mongodb+srv://Lopocozo:sX1eFqfdDhEtUqSj@cluster0.yhnnp.mongodb.net/"
   )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) =>
@@ -27,10 +27,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
     session({
-      secret: process.env.TOKEN_SECRET,
+      secret: "SECRET TOKEN BLAH BLAH",
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: 60 * 60 * 100 * 1000 }
+      cookie: { maxAge: 60 * 60 * 1000 }
     })
   );
 

@@ -123,6 +123,7 @@ export const logout = async (req, res) => {
 
 export const getMenu = async (req, res, next) => {
   try {
+    console.log("getMenu");
     const items = await MenuItem.find().exec();
     return res
       .status(HTTP_RESPONSE_CODE.SUCCESS)
@@ -135,6 +136,7 @@ export const getMenu = async (req, res, next) => {
         )
       );
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

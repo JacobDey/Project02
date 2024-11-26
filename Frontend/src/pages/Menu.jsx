@@ -9,7 +9,8 @@ import MenuList from "../components/MenuList";
 
 const Menu = () => {
     const [items, setItems] = useState([]);
-
+    console.log("Items: ");
+    console.log(items);
     useEffect(() => {
         fetch('http://localhost:3000/restaurant')
             .then(res => res.json())
